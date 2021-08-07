@@ -1,0 +1,30 @@
+{
+  "name": "form-builder",
+  "version": "1.0.0",
+  "description": "This is the submit Simform Solution practical round",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YashwantSingh7062/form-builder.git"
+  },
+  "keywords": [
+    "FormBuilder"
+  ],
+  "author": "Yashwant Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YashwantSingh7062/form-builder/issues"
+  },
+  "homepage": "https://github.com/YashwantSingh7062/form-builder#readme",
+  "dependencies": {
+    "apollo-server-express": "^3.1.2",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1",
+    "mongoose": "^5.13.5"
+  }
+}
