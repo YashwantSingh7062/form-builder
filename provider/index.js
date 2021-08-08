@@ -106,6 +106,21 @@ class mongoQuery {
                 });
         });
     }
+
+    findOneAndUpdate(collectionName, query, update, option) {
+        return new Promise((resolve, reject) => {
+            this.getDb(collectionName)
+                .then((collection) => {
+                    collection.findOneAndUpdate(query, update, option, (err, result) => {
+                        if (err) return reject(err);
+                        return resolve(result);
+                    });
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
 }
 
 module.exports = new mongoQuery();

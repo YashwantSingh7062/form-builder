@@ -35,6 +35,9 @@ async function startApolloServer() {
     // Middleware
     app.use(cors());
     app.use(express.static("public"));
+    app.get("*", (req, res) => {
+        res.sendFile(__dirname + "/public/index.html");
+    });
 
     // Creating Server
     var server

@@ -44,8 +44,9 @@ const QueryMutation = gql`
   #//                                                        MUTATION
   #//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   type Mutation {
-   addForm(form: FormInput!): Form!
-   addQuestions(question: QuestionInput!): Form!
+   addForm(form: FormInput!): FormMutation!
+   addQuestions(question: QuestionInput!): FormMutation!
+   sumbitForm(slug: String!): FormMutation!
   }
 `;
 

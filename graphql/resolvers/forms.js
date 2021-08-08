@@ -27,6 +27,8 @@ module.exports = {
         // Params :: slug
         form: asyncWrapper(async (parent, { slug }, { mongoQ }) => {
             let form = await mongoQ.findOne(FORMS, { slug }, {}, "")
+            if (!form) throw new Error("Form Not Found. Please try to add new form");
+
             return form._doc
         }),
     },
@@ -34,11 +36,14 @@ module.exports = {
         // Accessibility :: Everyone
         // Params : name
         addForm: async (_parent, args, { mongoQ }) => {
-            let ifExist = await mongoQ.find(FORMS, { title: args.form.title });
+            let ifExist = await mongoQ.findOne(FORMS, { name: args.form.name });
             if (ifExist) throw new Error("Form Already Exist...")
 
-            let form = await mongoQ.save(FORMS, args.form);
-            return form._doc
+            let form = await mongoQ.save(FORMS, { ...args.form, slug: args.form.name.replace(/\//g, "").replace(/ /g, "-") });
+            return {
+                message: "Form Added Successfully",
+                form: form._doc
+            }
         },
 
         // Accessibility :: Everyone
@@ -51,7 +56,24 @@ module.exports = {
             let inserted = await mongoQ.insertMany(QUESTIONS, questions);
 
             if (inserted.length < 1) throw new Error("Something went wrong!!");
-            return form._doc
+            return {
+                message: "Form Added Successfully",
+                form: form._doc
+            }
+        },
+
+        // Accessibility :: Everyone
+        // Params:: slug
+        sumbitForm: async (_parent, args, { mongoQ }) => {
+            let form = await mongoQ.findOne(FORMS, { slug: args.slug }, {}, "");
+            if (!form) throw new Error("Form try to add form first!");
+
+            let updatedForm = await mongoQ.findOneAndUpdate(FORMS, { slug: args.slug }, { total_response: form.total_response + 1 }, { new: true })
+
+            return {
+                message: "Responded successfully.",
+                form: updatedForm._doc
+            }
         }
     }
 };
